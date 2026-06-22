@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeDrop - Home</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #dc2626; 
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 { color: #1e293b; margin-bottom: 10px; }
+        
+        .search-box {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        select, input, .search-btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+        }
+        select, input { width: 220px; }
+        .search-btn {
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .search-btn:hover { background-color: #b91c1c; }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo">LifeDrop Droplet</div>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Find Blood Donors in Real-Time</h1>
+        <p style="color: #64748b;">Select blood group and area to find available donors instantly.</p>
+
+        <form action="#" method="GET" class="search-box">
+            <select name="blood_group" required>
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+
+            <input type="text" name="area" placeholder="Enter Area (e.g. Uttara)" required>
+
+            <button type="submit" class="search-btn">Search Donors</button>
+        </form>
+    </div>
+
+</body>
+</html>
