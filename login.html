@@ -4,96 +4,201 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LifeDrop - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --ink: #17140F;
+            --ink-soft: #57524A;
+            --crimson: #C4123D;
+            --crimson-dark: #8F0C2C;
+            --crimson-tint: #FCE7EB;
+            --line: #E9E3DB;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f1f5f9;
+            font-family: 'Inter', sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            color: var(--ink);
+            background: radial-gradient(ellipse 120% 80% at 50% -10%, #2A0812 0%, #4A0F1E 42%, #17070C 100%);
+            position: relative;
+            overflow: hidden;
         }
+
+        /* floating blood-drop accents, same motif as the landing page */
+        .drop {
+            position: absolute;
+            opacity: 0.14;
+            animation: float 7s ease-in-out infinite;
+            z-index: 0;
+        }
+        .drop svg { width: 100%; height: 100%; display: block; }
+        .drop.d1 { top: 10%; left: 8%;  width: 54px; animation-delay: 0s; }
+        .drop.d2 { bottom: 14%; left: 12%; width: 34px; animation-delay: 1.2s; opacity: 0.10; }
+        .drop.d3 { top: 16%; right: 10%; width: 44px; animation-delay: 0.6s; }
+        .drop.d4 { bottom: 10%; right: 14%; width: 60px; animation-delay: 2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
         .login-container {
             background-color: #ffffff;
-            width: 360px;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 380px;
+            max-width: 100%;
+            padding: 42px 36px;
+            border-radius: 20px;
+            box-shadow: 0 30px 70px -20px rgba(0,0,0,0.5);
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
+
+        .logo-mark {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 10px 22px -8px rgba(196, 18, 61, 0.55);
+        }
+
         .logo {
-            color: #dc2626;
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-family: 'Sora', sans-serif;
+            color: var(--ink);
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
         }
         .subtitle {
-            color: #64748b;
+            color: var(--ink-soft);
             font-size: 14px;
             margin-bottom: 30px;
         }
+
         .input-group {
             text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         .input-group label {
             display: block;
-            font-size: 14px;
-            color: #334155;
-            margin-bottom: 5px;
-            font-weight: bold;
+            font-size: 12.5px;
+            color: var(--ink-soft);
+            margin-bottom: 7px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .input-wrap {
+            position: relative;
+        }
+        .input-wrap .field-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 15px;
+            opacity: 0.55;
         }
         .input-group input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 16px;
+            padding: 13px 14px 13px 40px;
+            border: 1.5px solid var(--line);
+            border-radius: 10px;
+            font-size: 15.5px;
+            font-family: 'Inter', sans-serif;
             box-sizing: border-box;
+            background-color: #FCFBF9;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
         }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--crimson);
+            box-shadow: 0 0 0 3px var(--crimson-tint);
+            background-color: #fff;
+        }
+
         .login-btn {
             width: 100%;
-            background-color: #dc2626;
+            background-color: var(--crimson);
             color: white;
             border: none;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 6px;
+            padding: 14px;
+            font-size: 15.5px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            border-radius: 10px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 8px;
+            transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+            box-shadow: 0 12px 24px -10px rgba(196, 18, 61, 0.55);
         }
-        .login-btn:hover { background-color: #b91c1c; }
-        
+        .login-btn:hover { background-color: var(--crimson-dark); transform: translateY(-1px); }
+        .login-btn:active { transform: translateY(0); }
+
         .switch-page {
-            margin-top: 20px;
+            margin-top: 22px;
             font-size: 14px;
-            color: #64748b;
+            color: var(--ink-soft);
         }
         .switch-page a {
-            color: #dc2626;
+            color: var(--crimson);
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 700;
         }
+        .switch-page a:hover { text-decoration: underline; }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 18px;
+            font-size: 13px;
+            color: var(--ink-soft);
+            text-decoration: none;
+        }
+        .back-home:hover { color: var(--crimson); }
     </style>
 </head>
 <body>
 
+    <div class="drop d1"><svg viewBox="0 0 24 24" fill="#FF5C7A"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14z"/></svg></div>
+    <div class="drop d2"><svg viewBox="0 0 24 24" fill="#FF5C7A"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14z"/></svg></div>
+    <div class="drop d3"><svg viewBox="0 0 24 24" fill="#FF5C7A"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14z"/></svg></div>
+    <div class="drop d4"><svg viewBox="0 0 24 24" fill="#FF5C7A"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14z"/></svg></div>
+
     <div class="login-container">
+        <div class="logo-mark">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14z"/></svg>
+        </div>
         <div class="logo">LifeDrop Droplet</div>
         <div class="subtitle">Log in to find or donate blood</div>
 
         <form action="login_process.php" method="POST">
             <div class="input-group">
                 <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                <div class="input-wrap">
+                    <span class="field-icon">📱</span>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                </div>
             </div>
 
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <div class="input-wrap">
+                    <span class="field-icon">🔒</span>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
             </div>
 
             <button type="submit" class="login-btn">Log In</button>
@@ -102,6 +207,8 @@
         <div class="switch-page">
             Don't have an account? <a href="register.html">Register here</a>
         </div>
+
+        <a href="index.php" class="back-home">← Back to home</a>
     </div>
 
 </body>
