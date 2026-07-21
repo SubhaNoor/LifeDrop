@@ -176,6 +176,57 @@
             text-decoration: none;
         }
         .back-home:hover { color: var(--crimson); }
+
+        /* ---------- Admin code toggle ---------- */
+        .admin-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: var(--ink-soft);
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 8px 4px;
+            margin-top: 4px;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+        }
+        .admin-toggle:hover { color: var(--crimson); }
+
+        .admin-panel {
+            display: none;
+            text-align: left;
+            background: #FBF9F6;
+            border: 1.5px dashed var(--line);
+            border-radius: 12px;
+            padding: 16px 16px 4px;
+            margin-top: 4px;
+            margin-bottom: 16px;
+        }
+        .admin-panel.open { display: block; }
+        .admin-panel .hint {
+            font-size: 12px;
+            color: var(--ink-soft);
+            margin: -2px 0 12px;
+            line-height: 1.5;
+        }
+
+        .form-error {
+            display: none;
+            background: #FDECEC;
+            color: #9A1B1B;
+            border: 1px solid #F8CACA;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .form-error.show { display: block; }
     </style>
 </head>
 <body>
@@ -193,6 +244,8 @@
         <div class="subtitle">Create an account to join our network</div>
 
         <form action="register_process.php" method="POST">
+            <div class="form-error" id="formError">⚠️ Invalid admin code. You can't register as admin without the correct code.</div>
+
             <div class="input-group">
                 <label for="name">Full Name</label>
                 <div class="input-wrap">
@@ -235,6 +288,18 @@
                 </div>
             </div>
 
+            <button type="button" class="admin-toggle" id="adminToggleBtn">🛡️ Registering as an admin?</button>
+            <div class="admin-panel" id="adminPanel">
+                <p class="hint">Admins need a special access code. Leave this blank to register as a normal member.</p>
+                <div class="input-group" style="margin-bottom: 12px;">
+                    <label for="admin_code">Admin Access Code</label>
+                    <div class="input-wrap">
+                        <span class="field-icon">🔑</span>
+                        <input type="password" id="admin_code" name="admin_code" placeholder="Enter access code (optional)" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
             <button type="submit" class="register-btn">Register</button>
         </form>
 
@@ -244,6 +309,23 @@
 
         <a href="index.php" class="back-home">← Back to home</a>
     </div>
+
+    <script>
+        const adminToggleBtn = document.getElementById('adminToggleBtn');
+        const adminPanel = document.getElementById('adminPanel');
+        const formError = document.getElementById('formError');
+
+        adminToggleBtn.addEventListener('click', () => {
+            adminPanel.classList.toggle('open');
+        });
+
+        // register_process.php redirects back here with ?admin_error=1 if a wrong code was entered
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('admin_error') === '1') {
+            formError.classList.add('show');
+            adminPanel.classList.add('open');
+        }
+    </script>
 
 </body>
 </html>

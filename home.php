@@ -79,48 +79,96 @@ $incoming_requests = $conn->query("SELECT r.id, u.name, u.phone, u.blood_group, 
             overflow-x: hidden;
         }
 
-        /* ---------- Unique layered background: soft blobs + dot grid ---------- */
+        /* ---------- Signature background: oversized blood-type typography ---------- */
         .bg-scene {
             position: fixed;
             inset: 0;
             z-index: -1;
             overflow: hidden;
         }
-        .bg-scene::before {
-            content: "";
+        .type-mark {
             position: absolute;
-            inset: 0;
-            background-image: radial-gradient(rgba(23,20,15,0.055) 1px, transparent 1px);
-            background-size: 22px 22px;
-            mask-image: radial-gradient(circle at 50% 20%, black 0%, transparent 75%);
-            -webkit-mask-image: radial-gradient(circle at 50% 20%, black 0%, transparent 75%);
+            font-family: 'Sora', sans-serif;
+            font-weight: 800;
+            color: var(--crimson);
+            opacity: 0.055;
+            line-height: 1;
+            user-select: none;
+            white-space: nowrap;
         }
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.55;
-        }
-        .blob-crimson { width: 480px; height: 480px; top: -160px; left: -140px; background: radial-gradient(circle, rgba(196,18,61,0.30), transparent 70%); }
-        .blob-mint    { width: 420px; height: 420px; bottom: -140px; right: -120px; background: radial-gradient(circle, rgba(31,122,77,0.20), transparent 70%); }
-        .blob-peach   { width: 320px; height: 320px; top: 30%; right: 6%; background: radial-gradient(circle, rgba(255,166,120,0.22), transparent 70%); }
+        .tm1 { font-size: 340px; top: -90px;  left: -60px;  transform: rotate(-8deg); }
+        .tm2 { font-size: 260px; bottom: -80px; right: -50px; transform: rotate(6deg); color: var(--success); opacity: 0.05; }
+        .tm3 { font-size: 170px; top: 46%;   right: 3%;    transform: rotate(-5deg); }
+        .tm4 { font-size: 130px; bottom: 8%; left: 4%;     transform: rotate(4deg); opacity: 0.045; }
 
         .bg-drop {
             position: absolute;
-            opacity: 0.10;
+            opacity: 0.12;
             animation: bg-float 8s ease-in-out infinite;
         }
         .bg-drop svg { width: 100%; height: 100%; display: block; }
-        .bg-drop.b1 { top: 12%; left: 5%;  width: 34px; animation-delay: 0s; }
-        .bg-drop.b2 { top: 66%; left: 9%;  width: 24px; animation-delay: 1.4s; }
-        .bg-drop.b3 { top: 20%; right: 7%; width: 30px; animation-delay: 0.7s; }
-        .bg-drop.b4 { bottom: 10%; right: 20%; width: 40px; animation-delay: 2.1s; }
+        .bg-drop.b1 { top: 14%; left: 7%;  width: 26px; animation-delay: 0s; }
+        .bg-drop.b2 { bottom: 16%; right: 10%; width: 30px; animation-delay: 1.4s; }
 
         @keyframes bg-float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-14px) rotate(4deg); }
         }
 
+        /* ---------- Vitals strip: hospital-monitor ticker under the navbar ---------- */
+        .vitals-strip {
+            background: var(--ink);
+            color: rgba(255,255,255,0.85);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 7px 40px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            position: sticky;
+            top: 61px;
+            z-index: 400;
+            overflow: hidden;
+        }
+        .vitals-strip .live-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            text-transform: uppercase;
+            color: #FF7A93;
+        }
+        .vitals-strip .live-tag .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #FF5C7A;
+            box-shadow: 0 0 0 0 rgba(255,92,122,0.6);
+            animation: pulse-dot 1.8s infinite;
+        }
+        .vitals-strip .ekg {
+            flex-shrink: 0;
+            height: 20px;
+            width: 140px;
+            overflow: hidden;
+        }
+        .vitals-strip .ekg svg {
+            height: 20px;
+            width: 280px;
+            animation: ekg-scroll 2.4s linear infinite;
+        }
+        @keyframes ekg-scroll {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-140px); }
+        }
+        .vitals-strip .ticker-text {
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            font-size: 11.5px;
+        }
+        @media (max-width: 640px) {
+            .vitals-strip { padding: 7px 18px; top: 0; }
+            .vitals-strip .ticker-text { display: none; }
+        }
         h1, h2 {
             font-family: 'Sora', sans-serif;
             color: var(--ink);
@@ -504,13 +552,12 @@ $incoming_requests = $conn->query("SELECT r.id, u.name, u.phone, u.blood_group, 
 <body>
 
     <div class="bg-scene">
-        <div class="blob blob-crimson"></div>
-        <div class="blob blob-mint"></div>
-        <div class="blob blob-peach"></div>
+        <div class="type-mark tm1">O+</div>
+        <div class="type-mark tm2">A-</div>
+        <div class="type-mark tm3">B+</div>
+        <div class="type-mark tm4">AB+</div>
         <div class="bg-drop b1"><svg viewBox="0 0 24 24" fill="#C4123D"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14z"/></svg></div>
         <div class="bg-drop b2"><svg viewBox="0 0 24 24" fill="#C4123D"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14z"/></svg></div>
-        <div class="bg-drop b3"><svg viewBox="0 0 24 24" fill="#C4123D"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14z"/></svg></div>
-        <div class="bg-drop b4"><svg viewBox="0 0 24 24" fill="#C4123D"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14z"/></svg></div>
     </div>
 
     <div class="navbar">
@@ -522,9 +569,22 @@ $incoming_requests = $conn->query("SELECT r.id, u.name, u.phone, u.blood_group, 
             <a href="home.php">Dashboard</a>
             <a href="donated.php">💝 Donated</a>
             <a href="received.php">📩 Received</a>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                <a href="admin.php" style="background-color: rgba(255,255,255,0.18);">🛡️ Admin Panel</a>
+            <?php endif; ?>
             <a href="profile.php?phone=<?php echo $user_phone; ?>">👋 Hello, <?php echo htmlspecialchars($user_name); ?></a>
             <a href="logout.php" class="logout-btn">Logout</a>
         </nav>
+    </div>
+
+    <div class="vitals-strip">
+        <span class="live-tag"><span class="dot"></span>Live</span>
+        <span class="ekg">
+            <svg viewBox="0 0 280 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 10 H45 L52 10 L58 2 L66 18 L73 10 L80 10 L86 5 L92 15 L98 10 H140 L145 10 L151 2 L159 18 L166 10 L173 10 L179 5 L185 15 H140 L185 15 H228 L233 10 L239 2 L247 18 L254 10 L261 10 L267 5 L273 15 H280" fill="none" stroke="#2FE38A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
+        <span class="ticker-text">System status: matching donors in real-time · Every droplet counts</span>
     </div>
 
     <div class="container">
